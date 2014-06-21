@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Terra Colorita</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            border: none;
+            outline: none;
+        }
+
+        #matrix {
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+        #matrix td {
+            width: 20px;
+            height: 20px;
+            border: solid 1px #888;
+        }
+
+        #input {
+            background-color: #FFF;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 100px;
+            height: 20px;
+            padding: 2px 5px;
+            border: outset 1px #888;
+        }
+
+        #label {
+            position: absolute;
+            left: 130px;
+            top: 10px;
+            height: 22px;
+            line-height: 22px;
+        }
+
+        #label, a {
+            color: #EEE;
+            font-size: 15px;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+        }
+
+        #links {
+            position: absolute;
+            left: 10px;
+            top: 50px;
+        }
+
+        #links a {
+            color: #07F;
+        }
+    </style>
+</head>
+
+<body style="background-color: #000;" onload="fill()">
+
+<script>
+
+    function fill() {
+        var colors = document.querySelector('#input').value;
+
+        var i, j, mx = [];
+        var len = colors.length;
+        for (i = 0; i < len * 2; i++) {
+            mx.push([]);
+        }
+
+        for (i = 0; i < len; i++) {
+            for (j = 0; j < len; j++) {
+                mx[2 * len - i - 2][2 * len - j - 2] = '#' + colors[Math.min(i, j)] + colors[Math.min(i, j)] + colors[Math.min(i, j)];
+                mx[i][j] = '#' + colors[i] + colors[j] + '0';
+                mx[i][2 * len - j - 2] = '#' + colors[i] + '0' + colors[j];
+                mx[2 * len - i - 2][j] = '#0' + colors[j] + colors[i];
+            }
+        }
+        var out = [];
+        for (i = 0; i < mx.length; i++) {
+            out.push('<tr>');
+            for (j = 0; j < mx[i].length; j++) {
+                out.push('<td style="background-color: ' + mx[i][j] + ';" title="' + mx[i][j] + '"></td>');
+            }
+            out.push('</tr>');
+        }
+        document.querySelector('#matrix').innerHTML = out.join('');
+
+    }
+
+    function setcolors(colors) {
+        document.querySelector('#input').value = colors;
+        fill();
+    }
+
+</script>
+
+<input id="input" onchange="fill()" value="FB70" autofocus="1">
+
+<div id="label"> ← Enter your colors vector</div>
+
+<ul id="links">
+    <li><a href="#" onclick="setcolors('ECA86420')">ECA86420</a></li>
+    <li><a href="#" onclick="setcolors('EA60')">EA60</a></li>
+    <li><a href="#" onclick="setcolors('FB70')">FB70</a></li>
+    <li><a href="#" onclick="setcolors('C9630')">C9630</a></li>
+    <li><a href="#" onclick="setcolors('FEDCBA9876543210')">FEDCBA9876543210</a></li>
+    <li><a href="#" onclick="setcolors('123456789ABCDEF0')">123456789ABCDEF0</a></li>
+</ul>
+
+<table id="matrix"></table>
+
+</body>
+</html>
