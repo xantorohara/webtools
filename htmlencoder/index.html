@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Html encoder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        table {
+            margin: 0 auto;
+        }
+
+        table td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .xamp {
+            color: #69C;
+        }
+
+        .xlt {
+            color: #9C6;
+        }
+
+        .xgt {
+            color: #C69;
+        }
+
+        .xtab {
+            color: #666;
+        }
+
+        textarea {
+            width: 500px;
+            height: 500px;
+        }
+
+    </style>
+
+    <script>
+        function convert() {
+            var str = document.getElementById('source').value;
+            str = str.replace(/&/g, '&amp;').
+                    replace(/>/g, '&gt;').
+                    replace(/</g, '&lt;').
+                    replace(/\t/g, '    ');
+            document.getElementById('target').textContent = str;
+        }
+    </script>
+
+</head>
+<body>
+
+<table>
+    <tr>
+        <td>Source html text (with
+            <b class="xamp">&amp;</b>
+            <b class="xlt">&lt;</b>
+            <b class="xgt">&gt;</b>
+            <b class="xtab">\t</b> ):
+        </td>
+        <td>Encoded text (with
+            <b class="xamp">&amp;amp;</b>
+            <b class="xlt">&amp;lt;</b>
+            <b class="xgt">&amp;gt;</b>
+            <b class="xtab">4 spaces</b> ):
+        </td>
+    </tr>
+
+    <tr>
+        <td><textarea id="source" oninput="convert()"></textarea></td>
+        <td><textarea id="target" readonly="readonly"></textarea></td>
+    </tr>
+</table>
+
+</body>
+</html>
