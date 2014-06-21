@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head prefix="og:http://ogp.me/ns#">
+    <title>Image to base64 string online converter</title>
+
+    <meta name="keywords" content="image, base64, online, converter, png, jpg, gif"/>
+    <meta name="description" content="Online service for converting png, jpg or gif image into base64 string"/>
+
+    <meta property="og:type" content="website"/>
+    <!--<meta property="og:url" content="http://todo/imagetobase64"/>-->
+    <meta property="og:title" content="Image to base64 string online converter"/>
+    <meta property="og:description" content="Online service for converting png, jpg or gif image into base64 string"/>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            font-size: 14px;
+        }
+
+        body {
+            background-color: #666;
+            color: #eee;
+        }
+
+        #text {
+            background: black no-repeat center;
+            color: #3c3;
+            font-family: "Lucida Console", Monaco, monospace;
+            outline-color: #3c3;
+        }
+    </style>
+</head>
+
+<script>
+    function convertToBase64(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var imageBase64 = event.target.result;
+            var textarea = document.getElementById('text');
+            textarea.value = '';
+            textarea.style.backgroundImage = 'url("' + imageBase64 + '")';
+            setTimeout(function () {
+                textarea.value = imageBase64;
+                setTimeout(function () {
+                    textarea.select();
+                }, 1000);
+            }, 1000);
+
+        };
+        reader.readAsDataURL(file);
+    }
+</script>
+
+<body>
+<h1 style="text-align: center; padding: 10px; font-size: large;">
+    Convert image to base64 string online
+</h1>
+
+<p style="text-align: center; padding: 10px;">
+    Select source image:
+    <input id="file" type="file" onchange="convertToBase64(event)" style="width: 200px">
+</p>
+
+<div style="text-align: center; padding: 10px; background-color: #333;">
+    <textarea id="text" spellcheck="false" style="width: 800px; height: 500px; "></textarea>
+</div>
+
+<p style="text-align: center; padding: 10px;">
+    You may use the encoded image for embedding it into
+    HTML (<i>&lt;img src="data:image/..."&gt;</i>),
+    CSS (<i>background-image: url("data:image/...")</i>) or
+    JavaScript (<i>element.style.backgroundImage = 'url("data:image/...")'</i>i>) code .
+</p>
+
+</body>
+
+</html>
